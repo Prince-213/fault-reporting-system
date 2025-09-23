@@ -24,7 +24,7 @@ import {
 import { MapPin, Zap, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { sendEmail } from "@/lib/utils";
+import { powerProblems, sendEmail } from "@/lib/utils";
 
 export default function ReportFault() {
   const [formData, setFormData] = useState({
@@ -156,58 +156,31 @@ export default function ReportFault() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1  gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="faultType">Fault Type</Label>
                   <Select
                     value={formData.faultType}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, faultType: value })
-                    }
+                    onValueChange={(value) => {
+                      const selected = powerProblems.find(
+                        (problem) => problem.issue === value
+                      );
+                      setFormData({
+                        ...formData,
+                        faultType: value,
+                        severity: selected?.severity ?? "",
+                      });
+                    }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select fault type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="power-outage">Power Outage</SelectItem>
-                      <SelectItem value="transformer-fault">
-                        Transformer Fault
-                      </SelectItem>
-                      <SelectItem value="cable-damage">Cable Damage</SelectItem>
-                      <SelectItem value="voltage-fluctuation">
-                        Voltage Fluctuation
-                      </SelectItem>
-                      <SelectItem value="street-light">
-                        Street Light Issue
-                      </SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="severity">Severity Level</Label>
-                  <Select
-                    value={formData.severity}
-                    onValueChange={(value) =>
-                      setFormData({ ...formData, severity: value })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select severity" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">
-                        Low - Minor inconvenience
-                      </SelectItem>
-                      <SelectItem value="medium">
-                        Medium - Affecting multiple homes
-                      </SelectItem>
-                      <SelectItem value="high">
-                        High - Safety hazard/Large area
-                      </SelectItem>
-                      <SelectItem value="critical">
-                        Critical - Emergency situation
-                      </SelectItem>
+                      {powerProblems.map((problem) => (
+                        <SelectItem key={problem.issue} value={problem.issue}>
+                          {problem.issue}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>

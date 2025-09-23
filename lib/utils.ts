@@ -40,3 +40,26 @@ export async function sendEmail(name: string, message: string) {
     return false;
   }
 }
+
+export const powerProblems = [
+  { issue: "Power Outage", severity: "high" },
+  { issue: "Transformer Fault", severity: "high" },
+  { issue: "Cable Damage", severity: "medium" },
+  { issue: "Voltage Fluctuation", severity: "medium" },
+  { issue: "Street Light Issue", severity: "low" },
+  { issue: "Overloaded Transformer", severity: "high" },
+  { issue: "Frequent Load Shedding", severity: "medium" },
+  { issue: "Meter Tampering", severity: "medium" },
+  { issue: "Illegal Connections", severity: "high" },
+  { issue: "Fuse Damage", severity: "low" },
+  { issue: "Pole Collapse", severity: "high" },
+  { issue: "Bushfire/Tree Falling on Cables", severity: "high" },
+  { issue: "Feeder Trip", severity: "medium" },
+  { issue: "Burnt Service Wire", severity: "medium" },
+  { issue: "Underground Cable Fault", severity: "high" },
+  { issue: "Loose Neutral Wire", severity: "medium" },
+  { issue: "Lightning/Storm Damage", severity: "high" },
+  { issue: "Old/Worn-out Infrastructure", severity: "medium" },
+  { issue: "Generator Backfeed Accident", severity: "high" },
+  { issue: "Other", severity: "low" },
+];
