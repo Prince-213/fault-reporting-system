@@ -47,14 +47,15 @@ export default function LoginPage() {
       // Here you would typically make an API call to authenticate
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Store user data (in a real app, you'd use proper auth)
-      localStorage.setItem("user", JSON.stringify({ email, role }));
+      if (email == "admin123@gmail.com" && password == "123") {
+        // Store user data (in a real app, you'd use proper auth)
+        localStorage.setItem("user", JSON.stringify({ email, role }));
 
-      // Redirect to dashboard
-      if (role === "admin") {
+        // Redirect to dashboard
+
         window.location.href = "/admin";
-      } else if (role === "super-admin") {
-        window.location.href = "/super-admin";
+      } else {
+        setError("Invalid credentials. Please try again.");
       }
     } catch (err) {
       setError("Invalid credentials. Please try again.");

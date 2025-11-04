@@ -21,20 +21,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MapPin, Zap, AlertTriangle } from "lucide-react";
+import { MapPin, Zap, AlertTriangle, Paperclip } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { powerProblems, sendEmail } from "@/lib/utils";
+import { addReport } from "@/lib/actions";
 
 export default function ReportFault() {
   const [formData, setFormData] = useState({
     reporterName: "",
+    email: "",
     phoneNumber: "",
     location: "",
     faultType: "",
     description: "",
     severity: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,11 +57,11 @@ export default function ReportFault() {
     };
 
     // Save to localStorage (simulating database)
-    const existingReports = JSON.parse(
+    /* const existingReports = JSON.parse(
       localStorage.getItem("faultReports") || "[]"
     );
     existingReports.push(newReport);
-    localStorage.setItem("faultReports", JSON.stringify(existingReports));
+    localStorage.setItem("faultReports", JSON.stringify(existingReports)); */
 
     const emailBody = `
                     Location: ${formData.location}\n
@@ -66,19 +70,29 @@ export default function ReportFault() {
                     Please assign a personnel to handle this report as soon as possible.
                   `;
 
-    await sendEmail("Admin", emailBody);
+    try {
+      setLoading(true);
 
-    toast.success("Fault Reported Successfully");
+      await addReport({ reportData: newReport });
+      // await sendEmail("Admin", emailBody);
 
-    // Reset form
-    setFormData({
-      reporterName: "",
-      phoneNumber: "",
-      location: "",
-      faultType: "",
-      description: "",
-      severity: "",
-    });
+      toast.success("Fault Reported Successfully");
+
+      // Reset form
+      setFormData({
+        reporterName: "",
+        email: "",
+        phoneNumber: "",
+        location: "",
+        faultType: "",
+        description: "",
+        severity: "",
+      });
+    } catch {
+      toast.error("Error submitting report");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,9 +100,6 @@ export default function ReportFault() {
       <header className="flex mb-10 justify-center space-x-4">
         <Button variant="outline" asChild>
           <Link href="/admin">Admin Dashboard</Link>
-        </Button>
-        <Button variant="outline" asChild>
-          <Link href="/super-admin">Super Admin Dashboard</Link>
         </Button>
       </header>
       <div className="max-w-2xl mx-auto">
@@ -141,6 +152,19 @@ export default function ReportFault() {
                     required
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="phoneNumber">Email Address</Label>
+                <Input
+                  id="emailAddress"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  required
+                />
               </div>
 
               <div className="space-y-2">
@@ -200,9 +224,10 @@ export default function ReportFault() {
                 />
               </div>
 
-              <Button type="submit" className="w-full">
-                <MapPin className="h-4 w-4 mr-2" />
-                Submit Fault Report
+              <Button disabled={loading} type="submit" className="w-full">
+                <Paperclip className="h-4 w-4 mr-2" />
+
+                {loading ? "Submitting report...." : "Submit Fault Report"}
               </Button>
             </form>
           </CardContent>
