@@ -99,7 +99,7 @@ export default function ReportFault() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <header className="flex mb-10 justify-center space-x-4">
         <Button variant="outline" asChild>
-          <Link href="/admin">Admin Dashboard</Link>
+          <Link href="/login">Login to Dashboard</Link>
         </Button>
       </header>
       <div className="max-w-2xl mx-auto">

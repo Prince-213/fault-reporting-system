@@ -270,7 +270,7 @@ export default function AdminDashboard({
                         {report.severity.toUpperCase()}
                       </Badge>
                       <Badge className={getStatusColor(report.status)}>
-                        {report.status.toUpperCase()}
+                        {report.status?.toUpperCase()}
                       </Badge>
                     </div>
                   </div>
