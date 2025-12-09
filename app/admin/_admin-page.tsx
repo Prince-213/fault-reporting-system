@@ -112,7 +112,7 @@ export default function AdminDashboard({
       await sendUpdateEmail(
         "Reporter",
         email,
-        "A team has been delegated to resolve your reported issue."
+        "You're team has been delegated a task to resolve."
       );
     } catch {
       toast.error("Failed to assign staff. Try again.");
