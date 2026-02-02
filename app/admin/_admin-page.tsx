@@ -35,7 +35,7 @@ import {
   addTeam,
   confirmResolutionOfReport,
   delegateStaffToReport,
-} from "@/lib/actions";
+} from "@/lib/queries/actions";
 import { sendUpdateEmail } from "@/lib/utils";
 import { toast } from "sonner";
 

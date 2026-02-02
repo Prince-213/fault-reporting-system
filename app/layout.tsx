@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { ReminderProvider } from "@/components/ReminderProvider";
+import { ReactQueryClientProvider } from "@/components/ReactQueryClientProvider";
 
 // Reminder service will be initialized by the client-side component
 
@@ -21,12 +22,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ReminderProvider />
-        {children}
-        <Toaster richColors position="top-right" />
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang="en">
+        <body className="  ">
+          <ReminderProvider />
+          {children}
+          <Toaster richColors position="top-right" />
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }
