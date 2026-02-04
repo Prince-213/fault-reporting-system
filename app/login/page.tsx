@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Image from "next/image";
 import { toast } from "sonner";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { login } from "./actions";
 
 // Define the schema using Zod
 const loginSchema = z.object({
@@ -38,30 +40,20 @@ export default function LoginForm() {
     },
   });
 
-  const router = useRouter()
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormData) => {
-    // Simulate API call
-    console.log("Form data:", data);
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
+    setError(null);
+    const result = await login(data);
 
-    if (
-      data.email === "admin@faultee.com" &&
-      data.password === "admin123"
-    ) {
+    if (result.success) {
       toast.success("Login successful");
-      redirect("/admin")
+      router.push("/admin");
     } else {
-      toast.error("Invalid email or password");
+      toast.error(result.error || "Invalid email or password");
+      setError(result.error || "Invalid email or password");
     }
-
-    // Here you would typically make an API call to your backend
-    // try {
-    //   const response = await loginUser(data);
-    //   console.log("Login successful:", response);
-    // } catch (error) {
-    //   console.error("Login failed:", error);
-    // }
 
     reset(); // Reset form after submission
   };
