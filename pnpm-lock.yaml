@@ -131,6 +131,9 @@ importers:
       cmdk:
         specifier: 1.0.4
         version: 1.0.4(@types/react-dom@19.2.2(@types/react@19.2.2))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      computed-types:
+        specifier: ^1.11.2
+        version: 1.11.2
       date-fns:
         specifier: 4.1.0
         version: 4.1.0
@@ -1661,6 +1664,9 @@ packages:
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
+
+  computed-types@1.11.2:
+    resolution: {integrity: sha512-5KK7nQrJDtm0dByaXTY1ZnTmZchilV2cew2LqIDLQo9JGvrkSqbikfk0m+MpiEgTVTPPx3dFQmwKSkK6Iae5Jw==}
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -4167,6 +4173,8 @@ snapshots:
     optional: true
 
   commander@4.1.1: {}
+
+  computed-types@1.11.2: {}
 
   concat-map@0.0.1: {}
 

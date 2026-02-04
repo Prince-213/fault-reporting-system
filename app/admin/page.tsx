@@ -377,356 +377,352 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex">
-        <main className="flex-1 p-8">
-          {/* Header */}
-          <div className="mb-8">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6">
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+              Fault Reports Dashboard
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">
+              Real-time overview of all system faults and team performance
+            </p>
+          </div>
+          <div className="flex space-x-3 mt-4 lg:mt-0">
+            <button
+              onClick={() => refetch()}
+              className="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+            >
+              Refresh Data
+            </button>
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              Generate Report
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Stats Banner */}
+        <div className="bg-white dark:bg-black rounded-xl shadow-sm p-4 border dark:border-gray-800">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="flex items-center space-x-4">
+              <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                <Activity className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">
-                  Fault Reports Dashboard
-                </h1>
-                <p className="text-gray-600 mt-1">
-                  Real-time overview of all system faults and team performance
+                <p className="text-sm text-gray-600 dark:text-gray-400">Total Reports</p>
+                <p className="text-2xl font-bold dark:text-gray-100">
+                  {statsData?.totalComplaints || 0}
                 </p>
               </div>
-              <div className="flex space-x-3 mt-4 lg:mt-0">
-                <button
-                  onClick={() => refetch()}
-                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                >
-                  Refresh Data
-                </button>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                  Generate Report
-                </button>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg">
+                <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Critical Issues</p>
+                <p className="text-2xl font-bold text-red-600 dark:text-red-400">
+                  {severityDistribution.critical}
+                </p>
               </div>
             </div>
-
-            {/* Quick Stats Banner */}
-            <div className="bg-white rounded-xl shadow-sm p-4 border">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <Activity className="h-5 w-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Total Reports</p>
-                    <p className="text-2xl font-bold">
-                      {statsData?.totalComplaints || 0}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-red-100 rounded-lg">
-                    <AlertTriangle className="h-5 w-5 text-red-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Critical Issues</p>
-                    <p className="text-2xl font-bold text-red-600">
-                      {severityDistribution.critical}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-yellow-100 rounded-lg">
-                    <Clock className="h-5 w-5 text-yellow-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Avg. Response Time</p>
-                    <p className="text-2xl font-bold">4.2h</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Resolution Rate</p>
-                    <p className="text-2xl font-bold text-green-600">
-                      {statsData?.totalComplaints
-                        ? Math.round(
-                            (statsData.resolved / statsData.totalComplaints) *
-                              100,
-                          )
-                        : 0}
-                      %
-                    </p>
-                  </div>
-                </div>
+            <div className="flex items-center space-x-4">
+              <div className="p-2 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg">
+                <Clock className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Avg. Response Time</p>
+                <p className="text-2xl font-bold dark:text-gray-100">4.2h</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-lg">
+                <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Resolution Rate</p>
+                <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                  {statsData?.totalComplaints
+                    ? Math.round(
+                        (statsData.resolved / statsData.totalComplaints) *
+                          100,
+                      )
+                    : 0}
+                  %
+                </p>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
+          return (
+            <div
+              key={index}
+              className="bg-white dark:bg-black rounded-xl shadow-sm p-6 border dark:border-gray-800"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className={`p-3 ${stat.bg} dark:bg-opacity-20 rounded-lg`}>
+                  <Icon className={`h-6 w-6 ${stat.color} dark:opacity-90`} />
+                </div>
                 <div
-                  key={index}
-                  className="bg-white rounded-xl shadow-sm p-6 border"
+                  className={`text-sm font-medium ${stat.change.startsWith("+") ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`p-3 ${stat.bg} rounded-lg`}>
-                      <Icon className={`h-6 w-6 ${stat.color}`} />
-                    </div>
-                    <div
-                      className={`text-sm font-medium ${stat.change.startsWith("+") ? "text-green-600" : "text-red-600"}`}
-                    >
-                      {stat.change}
-                    </div>
-                  </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-600">{stat.title}</div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Recent Complaints */}
-            <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
-              <div className="px-6 py-4 border-b flex justify-between items-center">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Recent Complaints
-                </h2>
-                <Link
-                  href="/dashboard/complaints"
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                >
-                  View All <ChevronRight className="inline h-4 w-4" />
-                </Link>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="text-left py-3 px-6 text-sm font-medium text-gray-700">
-                        ID
-                      </th>
-                      <th className="text-left py-3 px-6 text-sm font-medium text-gray-700">
-                        Category
-                      </th>
-                      <th className="text-left py-3 px-6 text-sm font-medium text-gray-700">
-                        Urgency
-                      </th>
-                      <th className="text-left py-3 px-6 text-sm font-medium text-gray-700">
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {faultReports?.slice(0, 3)?.map((complaint) => (
-                      <tr
-                        key={complaint.id}
-                        className="border-b hover:bg-gray-50 transition-colors"
-                      >
-                        <td className="py-4 px-6">
-                          <div className="font-medium truncate text-gray-900">
-                            {complaint.id}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {complaint.time}
-                          </div>
-                        </td>
-                        <td className="py-4 px-6">
-                          <div className="font-medium">
-                            {complaint.category}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {complaint.location}
-                          </div>
-                        </td>
-                        <td className="py-4 px-6">
-                          <span
-                            className={`inline-flex capitalize items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getUrgencyColor(complaint.severity)}`}
-                          >
-                            {complaint.severity}
-                          </span>
-                        </td>
-                        <td className="py-4 px-6">
-                          <span
-                            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(complaint.status)}`}
-                          >
-                            {complaint.status.replace("-", " ").toUpperCase()}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Team Performance */}
-            <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
-              <div className="px-6 py-4 border-b flex justify-between items-center">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Team Performance
-                </h2>
-                <Link
-                  href="/dashboard/teams"
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                >
-                  Manage Teams <ChevronRight className="inline h-4 w-4" />
-                </Link>
-              </div>
-              <div className="p-6">
-                <div className="space-y-4">
-                  {teams.map((team) => (
-                    <div
-                      key={team.id}
-                      className="border rounded-lg p-4 hover:border-blue-300 transition-colors"
-                    >
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="font-semibold text-gray-900">
-                            {team.name}
-                          </h3>
-                          <div className="flex items-center space-x-4 mt-2">
-                            <div className="text-sm text-gray-600">
-                              <Users className="inline h-4 w-4 mr-1" />
-                              {team.members} members
-                            </div>
-                            <div className="text-sm text-blue-600">
-                              <Activity className="inline h-4 w-4 mr-1" />
-                              {team.active} active
-                            </div>
-                            <div className="text-sm text-orange-600">
-                              <AlertTriangle className="inline h-4 w-4 mr-1" />
-                              {team.complaints} complaints
-                            </div>
-                          </div>
-                        </div>
-                        <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                          {team.efficiency}% Efficiency
-                        </span>
-                      </div>
-
-                      <div className="mb-2">
-                        <div className="flex justify-between text-sm text-gray-600 mb-1">
-                          <span>Workload</span>
-                          <span>{team.complaints} tasks</span>
-                        </div>
-                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${
-                              team.complaints > 10
-                                ? "bg-red-500"
-                                : team.complaints > 5
-                                  ? "bg-orange-500"
-                                  : "bg-green-500"
-                            }`}
-                            style={{
-                              width: `${Math.min(team.complaints * 8, 100)}%`,
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                  {stat.change}
                 </div>
               </div>
+              <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+                {stat.value}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">{stat.title}</div>
             </div>
-          </div>
+          );
+        })}
+      </div>
 
-          {/* Severity Distribution Chart */}
-          <div className="mt-8 bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Severity Distribution
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Recent Complaints */}
+        <div className="bg-white dark:bg-black rounded-xl shadow-sm border dark:border-gray-800 overflow-hidden">
+          <div className="px-6 py-4 border-b dark:border-gray-800 flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Recent Complaints
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm text-red-600 font-medium">
-                      Critical
+            <Link
+              href="/dashboard/complaints"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium"
+            >
+              View All <ChevronRight className="inline h-4 w-4" />
+            </Link>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 dark:bg-gray-900/50">
+                <tr>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    ID
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Category
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Urgency
+                  </th>
+                  <th className="text-left py-3 px-6 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {faultReports?.slice(0, 3)?.map((complaint) => (
+                  <tr
+                    key={complaint.id}
+                    className="border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                  >
+                    <td className="py-4 px-6">
+                      <div className="font-medium truncate text-gray-900 dark:text-gray-100">
+                        {complaint.id}
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {complaint.time}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="font-medium dark:text-gray-200">
+                        {complaint.category}
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {complaint.location}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`inline-flex capitalize items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getUrgencyColor(complaint.severity)}`}
+                      >
+                        {complaint.severity}
+                      </span>
+                    </td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(complaint.status)}`}
+                      >
+                        {complaint.status.replace("-", " ").toUpperCase()}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Team Performance */}
+        <div className="bg-white dark:bg-black rounded-xl shadow-sm border dark:border-gray-800 overflow-hidden">
+          <div className="px-6 py-4 border-b dark:border-gray-800 flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Team Performance
+            </h2>
+            <Link
+              href="/dashboard/teams"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium"
+            >
+              Manage Teams <ChevronRight className="inline h-4 w-4" />
+            </Link>
+          </div>
+          <div className="p-6">
+            <div className="space-y-4">
+              {teams.map((team) => (
+                <div
+                  key={team.id}
+                  className="border dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 dark:hover:border-blue-700 transition-colors"
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                        {team.name}
+                      </h3>
+                      <div className="flex items-center space-x-4 mt-2">
+                        <div className="text-sm text-gray-600 dark:text-gray-400">
+                          <Users className="inline h-4 w-4 mr-1" />
+                          {team.members} members
+                        </div>
+                        <div className="text-sm text-blue-600 dark:text-blue-400">
+                          <Activity className="inline h-4 w-4 mr-1" />
+                          {team.active} active
+                        </div>
+                        <div className="text-sm text-orange-600 dark:text-orange-400">
+                          <AlertTriangle className="inline h-4 w-4 mr-1" />
+                          {team.complaints} complaints
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-2xl font-bold text-red-700">
-                      {severityDistribution.critical}
+                    <span className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                      {team.efficiency}% Efficiency
+                    </span>
+                  </div>
+
+                  <div className="mb-2">
+                    <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
+                      <span>Workload</span>
+                      <span>{team.complaints} tasks</span>
+                    </div>
+                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${
+                          team.complaints > 10
+                            ? "bg-red-500"
+                            : team.complaints > 5
+                              ? "bg-orange-500"
+                              : "bg-green-500"
+                        }`}
+                        style={{
+                          width: `${Math.min(team.complaints * 8, 100)}%`,
+                        }}
+                      ></div>
                     </div>
                   </div>
-                  <AlertTriangle className="h-8 w-8 text-red-500" />
                 </div>
-                <div className="mt-2 h-2 bg-red-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-red-500"
-                    style={{
-                      width: `${statsData?.totalComplaints ? (severityDistribution.critical / statsData.totalComplaints) * 100 : 0}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm text-orange-600 font-medium">
-                      High
-                    </div>
-                    <div className="text-2xl font-bold text-orange-700">
-                      {severityDistribution.high}
-                    </div>
-                  </div>
-                  <AlertTriangle className="h-8 w-8 text-orange-500" />
-                </div>
-                <div className="mt-2 h-2 bg-orange-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-orange-500"
-                    style={{
-                      width: `${statsData?.totalComplaints ? (severityDistribution.high / statsData.totalComplaints) * 100 : 0}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm text-yellow-600 font-medium">
-                      Medium
-                    </div>
-                    <div className="text-2xl font-bold text-yellow-700">
-                      {severityDistribution.medium}
-                    </div>
-                  </div>
-                  <AlertTriangle className="h-8 w-8 text-yellow-500" />
-                </div>
-                <div className="mt-2 h-2 bg-yellow-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-yellow-500"
-                    style={{
-                      width: `${statsData?.totalComplaints ? (severityDistribution.medium / statsData.totalComplaints) * 100 : 0}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm text-green-600 font-medium">
-                      Low
-                    </div>
-                    <div className="text-2xl font-bold text-green-700">
-                      {severityDistribution.low}
-                    </div>
-                  </div>
-                  <AlertTriangle className="h-8 w-8 text-green-500" />
-                </div>
-                <div className="mt-2 h-2 bg-green-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-green-500"
-                    style={{
-                      width: `${statsData?.totalComplaints ? (severityDistribution.low / statsData.totalComplaints) * 100 : 0}%`,
-                    }}
-                  ></div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
-        </main>
+        </div>
+      </div>
+
+      {/* Severity Distribution Chart */}
+      <div className="mt-8 bg-white dark:bg-black rounded-xl shadow-sm border dark:border-gray-800 p-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          Severity Distribution
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-red-600 dark:text-red-400 font-medium">
+                  Critical
+                </div>
+                <div className="text-2xl font-bold text-red-700 dark:text-red-300">
+                  {severityDistribution.critical}
+                </div>
+              </div>
+              <AlertTriangle className="h-8 w-8 text-red-500 dark:text-red-400" />
+            </div>
+            <div className="mt-2 h-2 bg-red-200 dark:bg-red-900/30 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-red-500"
+                style={{
+                  width: `${statsData?.totalComplaints ? (severityDistribution.critical / statsData.totalComplaints) * 100 : 0}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+          <div className="bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-900/30 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">
+                  High
+                </div>
+                <div className="text-2xl font-bold text-orange-700 dark:text-orange-300">
+                  {severityDistribution.high}
+                </div>
+              </div>
+              <AlertTriangle className="h-8 w-8 text-orange-500 dark:text-orange-400" />
+            </div>
+            <div className="mt-2 h-2 bg-orange-200 dark:bg-orange-900/30 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-orange-500"
+                style={{
+                  width: `${statsData?.totalComplaints ? (severityDistribution.high / statsData.totalComplaints) * 100 : 0}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+          <div className="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200 dark:border-yellow-900/30 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-yellow-600 dark:text-yellow-400 font-medium">
+                  Medium
+                </div>
+                <div className="text-2xl font-bold text-yellow-700 dark:text-yellow-300">
+                  {severityDistribution.medium}
+                </div>
+              </div>
+              <AlertTriangle className="h-8 w-8 text-yellow-500 dark:text-yellow-400" />
+            </div>
+            <div className="mt-2 h-2 bg-yellow-200 dark:bg-yellow-900/30 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-yellow-500"
+                style={{
+                  width: `${statsData?.totalComplaints ? (severityDistribution.medium / statsData.totalComplaints) * 100 : 0}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+          <div className="bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-900/30 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-green-600 dark:text-green-400 font-medium">
+                  Low
+                </div>
+                <div className="text-2xl font-bold text-green-700 dark:text-green-300">
+                  {severityDistribution.low}
+                </div>
+              </div>
+              <AlertTriangle className="h-8 w-8 text-green-500 dark:text-green-400" />
+            </div>
+            <div className="mt-2 h-2 bg-green-200 dark:bg-green-900/30 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-green-500"
+                style={{
+                  width: `${statsData?.totalComplaints ? (severityDistribution.low / statsData.totalComplaints) * 100 : 0}%`,
+                }}
+              ></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

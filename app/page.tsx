@@ -137,6 +137,9 @@ const PrebuiltUIHero: React.FC = () => {
             <a href="#" className="hover:text-gray-600 transition-colors">
               Pricing
             </a>
+            <Link href="/admin" className="hover:text-gray-600 transition-colors font-medium text-blue-600">
+              Dashboard
+            </Link>
 
             {/* Close Menu Button (Mobile) */}
             <button

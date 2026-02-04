@@ -60,7 +60,16 @@ const config: Config = {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  			},
+            // Resend specific grays for buttons/outlines
+            gray: {
+                10: 'hsl(var(--gray-a2))', // close to 240 6% 10%
+                a2: 'hsl(var(--gray-a2))',
+                a3: 'hsl(var(--gray-a3))',
+                a4: 'hsl(var(--gray-a4))',
+                a9: 'hsl(var(--gray-a9))',
+                a10: 'hsl(var(--gray-a10))',
+            }
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -69,25 +78,24 @@ const config: Config = {
   		},
   		keyframes: {
   			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
+  				from: { height: '0' },
+  				to: { height: 'var(--radix-accordion-content-height)' }
   			},
   			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
-  			}
+  				from: { height: 'var(--radix-accordion-content-height)' },
+  				to: { height: '0' }
+  			},
+            plop: {
+                '0%': { transform: 'scale(0)' },
+                '100%': { transform: 'scale(1)', opacity: '0' }
+            }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+            plop: 'plop 1s ease-out infinite',
+            plop2: 'plop 1s ease-out 0.2s infinite',
+            plop3: 'plop 1s ease-out 0.4s infinite',
   		}
   	}
   },
