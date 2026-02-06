@@ -1,20 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Menu,
-  X,
-  ChevronRight,
-  ChevronDown,
-  SparklesIcon,
-  LightbulbIcon,
-  ChevronsUpDownIcon,
-} from "lucide-react";
-
+import Link from "next/link";
+import { Menu, X, ChevronRight, LightbulbIcon, Search } from "lucide-react";
 
 const page = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showProductsDropdown, setShowProductsDropdown] = useState(false);
 
   // Handle menu toggle
   useEffect(() => {
@@ -39,13 +30,13 @@ const page = () => {
     >
       <nav className="flex items-center justify-between p-4 md:px-16 lg:px-24 xl:px-32 md:py-6 w-full">
         {/* Logo */}
-        <a
+        <Link
           href="/"
           className="text-2xl font-bold flex items-center space-x-2 text-[#050040]"
         >
           <LightbulbIcon size={32} />
           <h1>Faultee</h1>
-        </a>
+        </Link>
 
         {/* Desktop Menu */}
         <div
@@ -63,16 +54,24 @@ const page = () => {
                     md:flex
                   `}
         >
-          <a href="#" className="hover:text-gray-600 transition-colors">
+          <Link href="/" className="hover:text-gray-600 transition-colors">
             Home
-          </a>
+          </Link>
 
-          <a href="#" className="hover:text-gray-600 transition-colors">
-            Stories
-          </a>
-          <a href="#" className="hover:text-gray-600 transition-colors">
-            Pricing
-          </a>
+          <Link
+            href="/track"
+            className="hover:text-gray-600 transition-colors flex items-center gap-1"
+          >
+            <Search className="h-4 w-4" />
+            <span>Track Complaint</span>
+          </Link>
+
+          <Link
+            href="/admin"
+            className="hover:text-gray-600 transition-colors font-medium text-blue-600"
+          >
+            Dashboard
+          </Link>
 
           {/* Close Menu Button (Mobile) */}
           <button
@@ -85,9 +84,12 @@ const page = () => {
         </div>
 
         {/* Contact Button (Desktop) */}
-        <button className="hidden md:block bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-full font-medium transition">
+        <Link
+          href="/contact"
+          className="hidden md:block bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-full font-medium transition"
+        >
           Contact Us
-        </button>
+        </Link>
 
         {/* Open Menu Button (Mobile) */}
         <button
@@ -125,7 +127,13 @@ import { powerProblems } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addReport } from "@/lib/queries/actions";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
 interface ComplaintData {
@@ -191,7 +199,7 @@ const FileComplaint: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = e.target;
     if (type === "checkbox") {
@@ -240,12 +248,13 @@ const FileComplaint: React.FC = () => {
 
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["faultReports"] });
+      setComplaintId(data.id);
       setIsSuccess(true);
       toast.success("Complaint Submitted successfully");
     },
     onError: (error) => {
       toast.error(
-        error instanceof Error ? error.message : "Failed to submit complaint"
+        error instanceof Error ? error.message : "Failed to submit complaint",
       );
     },
   });
@@ -288,8 +297,8 @@ const FileComplaint: React.FC = () => {
                           isActive
                             ? "bg-blue-600 text-white"
                             : isCompleted
-                            ? "bg-green-600 text-white"
-                            : "bg-gray-100 text-gray-400"
+                              ? "bg-green-600 text-white"
+                              : "bg-gray-100 text-gray-400"
                         }`}
                       >
                         {isCompleted ? (
@@ -307,8 +316,8 @@ const FileComplaint: React.FC = () => {
                             isActive
                               ? "text-blue-600"
                               : isCompleted
-                              ? "text-green-600"
-                              : "text-gray-400"
+                                ? "text-green-600"
+                                : "text-gray-400"
                           }`}
                         >
                           {stepItem.title}
@@ -350,8 +359,23 @@ const FileComplaint: React.FC = () => {
                 <p className="text-base text-gray-600">
                   Complaint Reference Number
                 </p>
-                <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                  <div className="flex items-center text-base text-blue-700">
+                <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100 text-left">
+                  <h4 className="font-semibold text-blue-800 mb-2">
+                    How to Track Your Complaint:
+                  </h4>
+                  <p className="text-sm text-blue-700 space-y-2">
+                    1. Copy the Reference Number above. <br />
+                    2. Go to the{" "}
+                    <Link href="/track" className="underline font-bold">
+                      Tracking Page
+                    </Link>
+                    . <br />
+                    3. Paste the ID and click <strong>"Track"</strong> to see
+                    live updates.
+                  </p>
+                </div>
+                <div className="mt-4 p-3 bg-green-50 rounded-lg">
+                  <div className="flex items-center text-base text-green-700">
                     <Clock className="h-4 w-4 mr-2" />
                     Current Status:{" "}
                     <span className="font-semibold ml-1">Pending Review</span>
@@ -468,7 +492,7 @@ const FileComplaint: React.FC = () => {
                           value={formData.faultType}
                           onValueChange={(value) => {
                             const selected = powerProblems.find(
-                              (problem) => problem.issue === value
+                              (problem) => problem.issue === value,
                             );
                             setFormData({
                               ...formData,
@@ -623,7 +647,7 @@ const FileComplaint: React.FC = () => {
                             </div>
                             <div className="font-medium">
                               {powerProblems.find(
-                                (c) => c.issue === formData.faultType
+                                (c) => c.issue === formData.faultType,
                               )?.issue || "Not selected"}
                             </div>
                           </div>
@@ -634,13 +658,13 @@ const FileComplaint: React.FC = () => {
                             <div
                               className={`font-medium ${
                                 urgencyLevels.find(
-                                  (u) => u.id === formData.severity
+                                  (u) => u.id === formData.severity,
                                 )?.color
                               }`}
                             >
                               {
                                 urgencyLevels.find(
-                                  (u) => u.id === formData.severity
+                                  (u) => u.id === formData.severity,
                                 )?.label
                               }
                             </div>

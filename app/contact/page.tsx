@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronRight, ChevronDown, SparklesIcon, LightbulbIcon } from "lucide-react";
-import Image from "next/image";
+import Link from "next/link";
+import { Menu, X, ChevronRight, LightbulbIcon, Search } from "lucide-react";
 
 import {
   PhoneOutlined,
@@ -13,7 +13,6 @@ import {
 
 const PrebuiltUIHero: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showProductsDropdown, setShowProductsDropdown] = useState(false);
 
   // Handle menu toggle
   useEffect(() => {
@@ -26,47 +25,6 @@ const PrebuiltUIHero: React.FC = () => {
       document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const dropdown = document.getElementById("products-dropdown");
-      const trigger = document.getElementById("products-trigger");
-
-      if (
-        dropdown &&
-        trigger &&
-        !dropdown.contains(event.target as Node) &&
-        !trigger.contains(event.target as Node)
-      ) {
-        setShowProductsDropdown(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleProductsMouseEnter = () => {
-    if (window.innerWidth >= 768) {
-      // Desktop only
-      setShowProductsDropdown(true);
-    }
-  };
-
-  const handleProductsMouseLeave = () => {
-    if (window.innerWidth >= 768) {
-      // Desktop only
-      setShowProductsDropdown(false);
-    }
-  };
-
-  const toggleProductsDropdown = () => {
-    if (window.innerWidth < 768) {
-      // Mobile only
-      setShowProductsDropdown(!showProductsDropdown);
-    }
-  };
 
   return (
     <div className=" relative w-full min-h-screen">
@@ -82,13 +40,13 @@ const PrebuiltUIHero: React.FC = () => {
         {/* Navigation */}
         <nav className="flex items-center justify-between p-4 md:px-16 lg:px-24 xl:px-32 md:py-6 w-full">
           {/* Logo */}
-          <a
+          <Link
             href="/"
             className="text-2xl font-bold flex items-center space-x-2 text-[#050040]"
           >
             <LightbulbIcon size={32} />
             <h1>Faultee</h1>
-          </a>
+          </Link>
 
           {/* Desktop Menu */}
           <div
@@ -102,32 +60,24 @@ const PrebuiltUIHero: React.FC = () => {
               md:flex
             `}
           >
-            <a href="#" className="hover:text-gray-600 transition-colors">
+            <Link href="/" className="hover:text-gray-600 transition-colors">
               Home
-            </a>
+            </Link>
 
-            {/* Products Dropdown */}
-            <div
-              id="products-trigger"
-              className="relative group"
-              onMouseEnter={handleProductsMouseEnter}
-              onMouseLeave={handleProductsMouseLeave}
-              onClick={toggleProductsDropdown}
+            <Link
+              href="/track"
+              className="hover:text-gray-600 transition-colors flex items-center gap-1"
             >
-              <div className="flex items-center gap-1 cursor-pointer">
-                <span>Products</span>
-                <ChevronDown className="h-4 w-4" />
-              </div>
+              <Search className="h-4 w-4" />
+              <span>Track Complaint</span>
+            </Link>
 
-             
-            </div>
-
-            <a href="#" className="hover:text-gray-600 transition-colors">
-              Stories
-            </a>
-            <a href="#" className="hover:text-gray-600 transition-colors">
-              Pricing
-            </a>
+            <Link
+              href="/admin"
+              className="hover:text-gray-600 transition-colors font-medium text-blue-600"
+            >
+              Dashboard
+            </Link>
 
             {/* Close Menu Button (Mobile) */}
             <button
@@ -140,9 +90,12 @@ const PrebuiltUIHero: React.FC = () => {
           </div>
 
           {/* Contact Button (Desktop) */}
-          <button className="hidden md:block bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-full font-medium transition">
+          <Link
+            href="/contact"
+            className="hidden md:block bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-full font-medium transition"
+          >
             Contact Us
-          </button>
+          </Link>
 
           {/* Open Menu Button (Mobile) */}
           <button
@@ -165,7 +118,7 @@ const PrebuiltUIHero: React.FC = () => {
           neighborhood quickly and efficiently. Whether it's a sparking pole,
           streetlight outage, fallen wire, power surge, or any other electrical
           issue. For urgent safety risks (e.g., live wires on the ground, fire
-          hazards), call immediately using the numbers below — do not wait. 
+          hazards), call immediately using the numbers below — do not wait.
         </p>
 
         {/* CTA Buttons */}
@@ -178,9 +131,7 @@ const PrebuiltUIHero: React.FC = () => {
 
 export default PrebuiltUIHero;
 
-
 // components/ContactInfo.tsx
-
 
 const ContactInfo: React.FC = () => {
   return (
@@ -192,7 +143,8 @@ const ContactInfo: React.FC = () => {
             Helpline & Contact Channels
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            24/7 support for urgent electrical faults • Quick response for safety issues
+            24/7 support for urgent electrical faults • Quick response for
+            safety issues
           </p>
         </div>
 
@@ -206,8 +158,12 @@ const ContactInfo: React.FC = () => {
                   <PhoneOutlined />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">Main Helpline</h3>
-                  <p className="text-sm text-gray-500">24/7 Urgent Fault Reporting</p>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Main Helpline
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    24/7 Urgent Fault Reporting
+                  </p>
                 </div>
               </div>
               <div className="space-y-3 text-gray-700">
@@ -221,7 +177,10 @@ const ContactInfo: React.FC = () => {
                   href="tel:+2349091112222"
                   className="block text-lg font-medium text-red-600 hover:text-red-800 transition-colors"
                 >
-                  +234 909 111 2222 <span className="text-sm text-gray-500">(Emergency Only)</span>
+                  +234 909 111 2222{" "}
+                  <span className="text-sm text-gray-500">
+                    (Emergency Only)
+                  </span>
                 </a>
               </div>
             </div>
@@ -235,8 +194,12 @@ const ContactInfo: React.FC = () => {
                   <WhatsAppOutlined />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">WhatsApp Helpline</h3>
-                  <p className="text-sm text-gray-500">Send photos • Fastest for follow-up</p>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    WhatsApp Helpline
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    Send photos • Fastest for follow-up
+                  </p>
                 </div>
               </div>
               <a
@@ -258,8 +221,12 @@ const ContactInfo: React.FC = () => {
                   <MailOutlined />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-800">Email & Online Form</h3>
-                  <p className="text-sm text-gray-500">Non-urgent • Attach documents</p>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Email & Online Form
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    Non-urgent • Attach documents
+                  </p>
                 </div>
               </div>
 
@@ -286,10 +253,12 @@ const ContactInfo: React.FC = () => {
         {/* Small Trust Note */}
         <div className="text-center text-gray-600 text-sm">
           <p>
-            Urgent safety issues → We aim to acknowledge within <strong className="text-gray-800">30 minutes</strong>
+            Urgent safety issues → We aim to acknowledge within{" "}
+            <strong className="text-gray-800">30 minutes</strong>
           </p>
           <p className="mt-1">
-            General complaints → First response within <strong className="text-gray-800">24 hours</strong>
+            General complaints → First response within{" "}
+            <strong className="text-gray-800">24 hours</strong>
           </p>
         </div>
       </div>

@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut, Settings, Shield, ShieldCheck, Menu } from "lucide-react";
+import { logout } from "@/app/login/actions";
 
 interface DashboardUser {
   email: string;
@@ -30,8 +31,9 @@ export function DashboardHeader() {
     }
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem("user");
+    await logout();
     window.location.href = "/";
   };
 

@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronRight, ChevronDown, SparklesIcon, LightbulbIcon, SearchIcon } from "lucide-react";
+import { Menu, X, ChevronRight, LightbulbIcon, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import TestInput from "@/components/custom-input";
 
 const PrebuiltUIHero: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showProductsDropdown, setShowProductsDropdown] = useState(false);
 
   // Handle menu toggle
   useEffect(() => {
@@ -22,49 +21,10 @@ const PrebuiltUIHero: React.FC = () => {
     };
   }, [isMenuOpen]);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const dropdown = document.getElementById("products-dropdown");
-      const trigger = document.getElementById("products-trigger");
-
-      if (
-        dropdown &&
-        trigger &&
-        !dropdown.contains(event.target as Node) &&
-        !trigger.contains(event.target as Node)
-      ) {
-        setShowProductsDropdown(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleProductsMouseEnter = () => {
-    if (window.innerWidth >= 768) {
-      // Desktop only
-      setShowProductsDropdown(true);
-    }
-  };
-
-  const handleProductsMouseLeave = () => {
-    if (window.innerWidth >= 768) {
-      // Desktop only
-      setShowProductsDropdown(false);
-    }
-  };
-
-  const toggleProductsDropdown = () => {
-    if (window.innerWidth < 768) {
-      // Mobile only
-      setShowProductsDropdown(!showProductsDropdown);
-    }
-  };
-
   const [searchValue, setSearchValue] = useState("");
-  const [inputState, setInputState] = useState<"default" | "error" | "success">("default");
+  const [inputState, setInputState] = useState<"default" | "error" | "success">(
+    "default",
+  );
 
   const handleClear = () => {
     setSearchValue("");
@@ -73,8 +33,6 @@ const PrebuiltUIHero: React.FC = () => {
 
   return (
     <div className=" relative w-full h-screen overflow-hidden">
-      
-
       <section
         className="bg-[url('/gridBackground.png')] relative w-full overflow-hidden h-screen bg-no-repeat bg-cover bg-bottom text-sm pb-44"
         style={{
@@ -111,33 +69,22 @@ const PrebuiltUIHero: React.FC = () => {
               md:flex
             `}
           >
-            <a href="/" className="hover:text-gray-600 transition-colors">
+            <Link href="/" className="hover:text-gray-600 transition-colors">
               Home
-            </a>
+            </Link>
 
-            {/* Products Dropdown */}
-            <div
-              id="products-trigger"
-              className="relative group"
-              onMouseEnter={handleProductsMouseEnter}
-              onMouseLeave={handleProductsMouseLeave}
-              onClick={toggleProductsDropdown}
+            <Link
+              href="/track"
+              className="hover:text-gray-600 transition-colors flex items-center gap-1"
             >
-              <div className="flex items-center gap-1 cursor-pointer">
-                <span>Products</span>
-                <ChevronDown className="h-4 w-4" />
-              </div>
+              <Search className="h-4 w-4" />
+              <span>Track Complaint</span>
+            </Link>
 
-              {/* Dropdown Content */}
-            </div>
-
-            <a href="#" className="hover:text-gray-600 transition-colors">
-              Stories
-            </a>
-            <a href="#" className="hover:text-gray-600 transition-colors">
-              Pricing
-            </a>
-            <Link href="/admin" className="hover:text-gray-600 transition-colors font-medium text-blue-600">
+            <Link
+              href="/admin"
+              className="hover:text-gray-600 transition-colors font-medium text-blue-600"
+            >
               Dashboard
             </Link>
 
