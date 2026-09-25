@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     console.log("Received Body:", body);
 
     const { data, error } = await resend.emails.send({
-      from: "Acme <no-reply@kargoxlogistics.com>",
+      from: "Acme <no-reply@nabataa.com>",
       to: [body.email],
       subject: "Electrical Fault Report Notification",
       react: EmailTemplate({
